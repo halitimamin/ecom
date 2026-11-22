@@ -4,14 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Dashboard — House &amp; Co.</title>
+<link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
-<header class="topbar">
-  <h1>Admin Dashboard</h1>
-  <a class="back-link" href="../index.html">&larr; Back to shop</a>
+<body data-page="admin">
+<header class="site-header">
+  <div class="container header-row">
+    <a class="logo" href="../index.html">House &amp; Co.</a>
+    <nav class="nav">
+      <ul>
+        <li><a href="../index.html">Shop</a></li>
+        <li><a href="../products.html">Products</a></li>
+        <li><a href="../cart.html">Cart</a></li>
+        <li><a href="index.html">Admin</a></li>
+      </ul>
+    </nav>
+  </div>
 </header>
 <main class="container">
+  <h1 class="page-title">Admin Dashboard</h1>
   <section class="stats">
     <div class="stat"><span class="stat-value" id="stat-total">0</span><span class="stat-label">Orders</span></div>
     <div class="stat"><span class="stat-value" id="stat-pending">0</span><span class="stat-label">Pending</span></div>
@@ -23,9 +34,9 @@
       <button class="btn-refresh" id="refresh-btn" type="button">Refresh</button>
     </div>
     <div class="orders-list" id="orders-list"></div>
-    <p class="empty-note" id="empty-note">No orders yet. Customers' orders appear here after they check out on the shop.</p>
   </section>
 </main>
+<script src="../js/supabase-config.js"></script>
 <script src="admin.js"></script>
 </body>
 </html>

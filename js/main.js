@@ -109,33 +109,48 @@
     return cart.reduce((sum, it) => sum + (it.price || 0) * (it.qty || 1), 0);
   }
 
-  function readOrders() {
-    try {
-      const raw = localStorage.getItem('userOrders');
-      const parsed = raw ? JSON.parse(raw) : [];
-      return Array.isArray(parsed) ? parsed : [];
-    } catch (e) {
-      return [];
-    }
-  }
-
-  function saveOrders(orders) {
-    try { localStorage.setItem('userOrders', JSON.stringify(orders)); } catch (e) { /* ignore */ }
-  }
-
-  function saveOrder() {
+  async function placeOrder() {
     const cart = getCart();
-    if (!cart.length) return;
-    const orders = readOrders();
-    const order = {
-      id: 'order-' + Date.now(),
-      date: new Date().toISOString(),
-      status: 'pending',
-      total: formatMoney(cartTotal(cart)),
-      items: cart.map((i) => ({ name: i.name, price: i.price, qty: i.qty }))
+    if (!cart.length) {
+      showToast('Your cart is empty — nothing to place.');
+      return;
+    }
+    const headers = {
+      'apikey': SUPABASE_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_KEY,
+      'Content-Type': 'application/json'
     };
-    orders.unshift(order);
-    saveOrders(orders);
+    let order;
+    try {
+      const res = await fetch(SUPABASE_URL + '/rest/v1/orders', {
+        method: 'POST',
+        headers: { ...headers, 'Prefer': 'return=representation' },
+        body: JSON.stringify({ total: cartTotal(cart), status: 'pending' })
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const rows = await res.json();
+      order = rows && rows[0];
+      if (!order) throw new Error('no order returned');
+    } catch (e) {
+      showToast('Could not place order: ' + e.message);
+      return;
+    }
+    let failedItem = null;
+    for (const item of cart) {
+      try {
+        const res = await fetch(SUPABASE_URL + '/rest/v1/order_items', {
+          method: 'POST',
+          headers: headers,
+          body: JSON.stringify({ order_id: order.id, product_id: item.id, name: item.name, price: item.price, qty: item.qty })
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+      } catch (e) {
+        failedItem = item.name;
+        break;
+      }
+    }
+    const total = order.total != null ? formatMoney(Number(order.total)) : formatMoney(cartTotal(cart));
+    showToast('Order placed — ID ' + order.id + ' — ' + total + (failedItem ? ' (missing item: ' + failedItem + ')' : ''));
   }
 
   function cartQty(id) {
@@ -437,10 +452,9 @@
       return;
     }
     if (e.target.closest('#checkout-btn')) {
-      saveOrder();
+      placeOrder();
       clearCart();
       renderCartPage();
-      showToast('Order received — thanks for the demo purchase!');
     }
     const filterBtn = e.target.closest('#category-filter button');
     if (filterBtn) {
