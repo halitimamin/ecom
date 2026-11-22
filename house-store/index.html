@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="House &amp; Co. — curated house products for every room. A static demo with fakedata.">
+<title>House &amp; Co. — Home &amp; lifestyle products</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="home">
+
+<header class="site-header">
+  <div class="container header-row">
+    <a class="logo" href="index.html">House &amp; Co.</a>
+    <nav class="nav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Shop</a></li>
+        <li><a href="cart.html">Cart</a></li>
+      </ul>
+    </nav>
+    <div class="header-right">
+      <a class="cart-link" href="cart.html" aria-label="View cart">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="17" cy="21" r="1"></circle><path d="M2 2h3l2 15h12L23 6H3z"></path></svg>
+        <span class="cart-badge" id="cart-badge" hidden>0</span>
+      </a>
+      <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Menu">&#9776;</button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Welcome to your home haven</h1>
+      <p>A curated collection of house products for every room — sofas, beds, kitchen essentials, decor and more, all with fakedata on this static demo.</p>
+      <a class="btn btn-accent" href="products.html">Shop the collection</a>
+    </div>
+    <div class="hero-media" aria-hidden="true">
+      <div class="media-tile"></div>
+      <div class="media-tile"></div>
+      <div class="media-tile"></div>
+      <div class="media-tile"></div>
+      <div class="media-tile"></div>
+      <div class="media-tile"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Featured this week</h2>
+    <div class="products-grid" id="featured-grid"></div>
+  </section>
+
+  <section class="section">
+    <h2>Shop by room</h2>
+    <div class="category-grid" id="categories"></div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <a class="logo" href="index.html">House &amp; Co.</a>
+      <p class="footer-tagline">Curated house products — a static demo built with fakedata.</p>
+      <p class="footer-note">Orders and payments do not work on this demo — it's a static showcase.</p>
+    </div>
+    <div>
+      <h4>Shop</h4>
+      <ul class="footer-links">
+        <li><a href="products.html">All products</a></li>
+        <li><a href="products.html?category=Living+Room">Living Room</a></li>
+        <li><a href="products.html?category=Bedroom">Bedroom</a></li>
+        <li><a href="products.html?category=Kitchen">Kitchen</a></li>
+        <li><a href="products.html?category=Garden">Garden</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Quick links</h4>
+      <ul class="footer-links">
+        <li><a href="products.html">Shop</a></li>
+        <li><a href="cart.html">Cart</a></li>
+        <li><a href="index.html">Home</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul class="footer-links">
+        <li>Email: info@houseandco.store</li>
+        <li>Phone: (0202) 555-0198</li>
+        <li>Address: 123 Maple Avenue, City, Country</li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>&copy; 2026 House &amp; Co. &mdash; All rights reserved.</p>
+    <div class="social">
+      <a href="#instagram" aria-label="Instagram">Instagram</a>
+      <a href="#linkedin" aria-label="LinkedIn">LinkedIn</a>
+      <a href="#twitter" aria-label="Twitter">Twitter</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
