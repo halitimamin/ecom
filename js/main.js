@@ -109,6 +109,35 @@
     return cart.reduce((sum, it) => sum + (it.price || 0) * (it.qty || 1), 0);
   }
 
+  function readOrders() {
+    try {
+      const raw = localStorage.getItem('userOrders');
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveOrders(orders) {
+    try { localStorage.setItem('userOrders', JSON.stringify(orders)); } catch (e) { /* ignore */ }
+  }
+
+  function saveOrder() {
+    const cart = getCart();
+    if (!cart.length) return;
+    const orders = readOrders();
+    const order = {
+      id: 'order-' + Date.now(),
+      date: new Date().toISOString(),
+      status: 'pending',
+      total: formatMoney(cartTotal(cart)),
+      items: cart.map((i) => ({ name: i.name, price: i.price, qty: i.qty }))
+    };
+    orders.unshift(order);
+    saveOrders(orders);
+  }
+
   function cartQty(id) {
     const item = getCart().find((i) => i.id === id);
     return item ? item.qty : 0;
@@ -408,6 +437,7 @@
       return;
     }
     if (e.target.closest('#checkout-btn')) {
+      saveOrder();
       clearCart();
       renderCartPage();
       showToast('Order received — thanks for the demo purchase!');
