@@ -76,7 +76,8 @@
   }
 
   function productImage(p, w, h) {
-    return imgUrl(w || 300, h || 200, (p && p.tone) || '#888', (p && p.name) || '');
+    if (p && p.image) return p.image;
+    return 'images/product-' + (p && p.id) + '.png';
   }
 
   function formatMoney(n) {
